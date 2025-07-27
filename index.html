@@ -4,144 +4,180 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Puthal - Mental Health Well-being Reimagined</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1><img src="logo.jpg" alt="Puthal Logo" width="50" height="50"> Puthal</h1>
-        <nav>
-            <a href="#home">Home</a> |
-            <a href="#about">About</a> |
-            <a href="#features">Features</a> |
-            <a href="#join">Join Us</a> |
-            <a href="#contact">Contact</a>
+        <nav class="header-nav">
+            <a href="#home" class="logo">
+                <img src="logo.jpg" alt="Puthal Logo" width="40" height="40">
+                Puthal
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#join">Join Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="search-icon" onclick="toggleSearch()">🔍</button>
         </nav>
-        <hr>
+        
+        <div id="search-overlay" class="search-overlay">
+            <div class="search-container">
+                <div class="search-header">
+                    <h3>Search Puthal</h3>
+                    <button class="close-search" onclick="toggleSearch()">&times;</button>
+                </div>
+                <form class="search-form" onsubmit="performSearch(event)">
+                    <input type="text" id="search-input" class="search-input" placeholder="Search for mental health resources, features, or help..." autofocus>
+                    <button type="submit" class="search-btn">Search</button>
+                </form>
+                <div class="search-suggestions">
+                    <h4>Popular searches:</h4>
+                    <div class="suggestion-tags">
+                        <span class="suggestion-tag" onclick="searchFor('mood tracking')">Mood Tracking</span>
+                        <span class="suggestion-tag" onclick="searchFor('meditation')">Meditation</span>
+                        <span class="suggestion-tag" onclick="searchFor('therapy')">Therapy</span>
+                        <span class="suggestion-tag" onclick="searchFor('support')">Community Support</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
-
     <main>
-        <section id="home">
-            <h1>Mental Health Well-being Reimagined</h1>
-            <p><strong>Empowering individuals to prioritize their mental well-being through innovative technology.</strong></p>
-            
-            <h3>Download Our App:</h3>
-            <p>
-                <a href="#">📱 Download on the App Store</a><br>
-                <a href="#">▶️ Get it on Google Play</a>
-            </p>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Mental Health<br>Well-being<br>Reimagined</h1>
+                <p class="subtitle">Empowering individuals to prioritize their mental well-being through innovative technology.</p>
+                
+                <div class="app-download">
+                    <h3>Download Our App:</h3>
+                    <div class="app-buttons">
+                        <a href="#" class="app-btn">📱 Download on the App Store</a>
+                        <a href="#" class="app-btn google-play">▶️ Get it on Google Play</a>
+                    </div>
+                </div>
+            </div>
 
-            <h3>📱 App Preview:</h3>
-            
-            <table border="3" cellpadding="0" cellspacing="0" bgcolor="#333333" width="300" align="center">
-                <tr>
-                    <td>
+            <div class="phone-mockup">
+                <div class="smartphone-frame">
+                    <div class="phone-screen">
+                        <div class="status-bar">
+                            <span>1:30</span>
+                            <span>📶 📶 📶 🔋 100%</span>
+                        </div>
                         
-                        <table border="0" cellpadding="15" cellspacing="0" bgcolor="#ffffff" width="100%">
-                            
-                            <tr>
-                                <td align="left"><small>1:30</small></td>
-                                <td align="right"><small>📶 📶 📶 🔋</small></td>
-                            </tr>
-                            
-                            
-                            <tr>
-                                <td colspan="2">
-                                    <center>
-                                        <h3>Puthal</h3>
-                                        <p><strong>Welcome back</strong></p>
-                                        <p>How are you feeling?</p>
-                                        
-                                        
-                                        <table border="0" cellpadding="5" cellspacing="5" width="100%">
-                                            <tr align="center">
-                                                <td bgcolor="#f0f0ff"><button>😔<br><small>Sad</small></button></td>
-                                                <td bgcolor="#f0f0ff"><button>😐<br><small>Normal</small></button></td>
-                                                <td bgcolor="#f0f0ff"><button>😰<br><small>Scared</small></button></td>
-                                                <td bgcolor="#f0f0ff"><button>😊<br><small>Happy</small></button></td>
-                                            </tr>
-                                        </table>
-                                        
-                                        <br>
-                                        
-                                      
-                                        <table border="1" cellpadding="20" cellspacing="0" bgcolor="#e8e5ff" width="100%">
-                                            <tr>
-                                                <td align="center">
-                                                    <h1>🧘‍♀️</h1>
-                                                    <p><small>Start your mindfulness journey</small></p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </center>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
+                        <div class="app-header">
+                            <img src="logo.jpg" alt="Puthal" width="30" height="30">
+                            <h3>Puthal</h3>
+                        </div>
+                    
+                        <div class="welcome-section">
+                            <h4>Welcome back</h4>
+                            <p>How are you feeling?</p>
+                        </div>
+                    
+                        <div class="mood-grid">
+                            <div class="mood-btn">
+                                <span class="emoji">😔</span>
+                                <span>Sad</span>
+                            </div>
+                            <div class="mood-btn">
+                                <span class="emoji">😐</span>
+                                <span>Normal</span>
+                            </div>
+                            <div class="mood-btn">
+                                <span class="emoji">😰</span>
+                                <span>Scared</span>
+                            </div>
+                            <div class="mood-btn">
+                                <span class="emoji">😊</span>
+                                <span>Happy</span>
+                            </div>
+                        </div>
+                        
+                        <div class="meditation-card">
+                            <span class="meditation-icon">🧘‍♀️</span>
+                            <p>Start your mindfulness journey</p>
+                            <small>Tap to begin meditation</small>
+                        </div>
+                        
+                        <div class="bottom-nav">
+                            <div class="nav-item">
+                                <span class="icon">🏠</span>
+                                <span>Home</span>
+                            </div>
+                            <div class="nav-item">
+                                <span class="icon">📊</span>
+                                <span>Track</span>
+                            </div>
+                            <div class="nav-item">
+                                <span class="icon">🧘</span>
+                                <span>Meditate</span>
+                            </div>
+                            <div class="nav-item">
+                                <span class="icon">👤</span>
+                                <span>Profile</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        
-        <section id="features">
-            <hr>
-            <h2>Our Features</h2>
-            
-            <table border="1" cellpadding="20" cellspacing="0" width="100%">
-                <tr>
-                    <td align="center">
-                        <h2>🧠</h2>
-                        <h3>AI Mood Tracking</h3>
+        <section id="features" class="features">
+            <div class="features-container">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🧠</div>
+                        <h3>AI Mood<br>Tracking</h3>
                         <p>AI-driven mood monitoring</p>
-                    </td>
-                    <td align="center">
-                        <h2>🪷</h2>
-                        <h3>Mindfulness Exercises</h3>
-                        <p>Exercises for inner peace</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center">
-                        <h2>➕</h2>
-                        <h3>Therapy & Counseling</h3>
-                        <p>Professional support & resources</p>
-                    </td>
-                    <td align="center">
-                        <h2>👥</h2>
-                        <h3>Community Support</h3>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🪷</div>
+                        <h3>Mindfulness<br>Exercises</h3>
+                        <p>Exercises for<br>inner peace</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">➕</div>
+                        <h3>Therapy &<br>Counseling</h3>
+                        <p>Professional support<br>& resources</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3>Community<br>Support</h3>
                         <p>Connect with others</p>
-                    </td>
-                </tr>
-            </table>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        
-        <section id="newsletter">
-            <hr>
-            <center>
+        <section id="newsletter" class="newsletter">
+            <div class="newsletter-container">
                 <h2>📧 Stay Connected</h2>
                 <p>Get the latest updates on mental health resources and app features</p>
                 
-                <form>
-                    <p>
-                        <input type="email" placeholder="Enter your email address" size="30" required>
-                        <input type="submit" value="Subscribe">
-                    </p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
                 </form>
-            </center>
+            </div>
         </section>
     </main>
 
-    
     <footer id="contact">
-        <hr>
-        <h2>Contact & Information</h2>
-        
-        <table border="0" cellpadding="15" width="100%">
-            <tr valign="top">
-                <td width="25%">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
                     <h3>Puthal</h3>
                     <p>Empowering mental wellness through innovative technology. Your journey to better mental health starts here.</p>
-                </td>
-                <td width="25%">
+                </div>
+
+                <div class="footer-section">
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="#home">Home</a></li>
@@ -149,8 +185,9 @@
                         <li><a href="#features">Features</a></li>
                         <li><a href="#join">Join Us</a></li>
                     </ul>
-                </td>
-                <td width="25%">
+                </div>
+
+                <div class="footer-section">
                     <h3>Support</h3>
                     <ul>
                         <li><a href="#">Help Center</a></li>
@@ -158,8 +195,9 @@
                         <li><a href="#">Terms of Service</a></li>
                         <li><a href="#">Contact Support</a></li>
                     </ul>
-                </td>
-                <td width="25%">
+                </div>
+
+                <div class="footer-section">
                     <h3>Connect</h3>
                     <ul>
                         <li><a href="#">📧 hello@puthal.com</a></li>
@@ -167,14 +205,102 @@
                         <li><a href="#">🐦 Twitter</a></li>
                         <li><a href="#">📘 Facebook</a></li>
                     </ul>
-                </td>
-            </tr>
-        </table>
-        
-        <hr>
-        <center>
-            <p><small>&copy; 2025 Puthal. All rights reserved. Made with ❤️ for mental wellness.</small></p>
-        </center>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Puthal. All rights reserved. Made with ❤️ for mental wellness.</p>
+            </div>
+        </div>
     </footer>
+
+    <script>
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.querySelector('.newsletter-input').value;
+            if (email) {
+                alert('Thank you for subscribing! We\'ll keep you updated on our mental health resources.');
+                document.querySelector('.newsletter-input').value = '';
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        function toggleSearch() {
+            const overlay = document.getElementById('search-overlay');
+            if (!overlay) {
+                console.error('Search overlay not found');
+                return;
+            }
+            
+            const isVisible = overlay.style.display === 'flex';
+            
+            if (isVisible) {
+                overlay.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            } else {
+                overlay.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                const searchInput = document.getElementById('search-input');
+                if (searchInput) {
+                    searchInput.focus();
+                }
+            }
+        }
+
+        function performSearch(event) {
+            event.preventDefault();
+            const searchInput = document.getElementById('search-input');
+            if (!searchInput) return;
+            
+            const searchTerm = searchInput.value.trim();
+            
+            if (searchTerm) {
+                // Simulate search functionality
+                alert(`Searching for: "${searchTerm}"\n\nThis would typically connect to a search API or database to find relevant mental health resources, articles, or features.`);
+                toggleSearch();
+                searchInput.value = '';
+            }
+        }
+
+        function searchFor(term) {
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.value = term;
+                performSearch(new Event('submit'));
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('search-overlay');
+            if (overlay) {
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        toggleSearch();
+                    }
+                });
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const overlay = document.getElementById('search-overlay');
+                if (overlay && overlay.style.display === 'flex') {
+                    toggleSearch();
+                }
+            }
+        });
+    </script>
 </body>
 </html>
