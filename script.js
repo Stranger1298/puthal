@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     checkLoginState();
     
+    setTimeout(() => {
+        initTextFlipper();
+    }, 500);
+    
     const dashboardNav = document.getElementById('dashboard-nav');
     if (dashboardNav) {
         dashboardNav.addEventListener('click', function(e) {
@@ -611,8 +615,14 @@ function checkDashboardAccess() {
     const dashboardSection = document.getElementById('dashboard');
     const dashboardNav = document.getElementById('dashboard-nav');
     
-    if (checkLoginState()) {
-        // User is logged in - show dashboard elements
+    let userData = localStorage.getItem('puthal_user');
+    if (!userData) {
+        userData = sessionStorage.getItem('puthal_user');
+    }
+    
+    const isLoggedIn = !!userData;
+    
+    if (isLoggedIn) {
         if (dashboardSection) {
             dashboardSection.style.display = 'block';
         }
@@ -620,7 +630,6 @@ function checkDashboardAccess() {
             dashboardNav.style.display = 'block';
         }
     } else {
-        // User is not logged in - hide dashboard elements
         if (dashboardSection) {
             dashboardSection.style.display = 'none';
         }
