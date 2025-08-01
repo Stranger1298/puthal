@@ -3,6 +3,33 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check login state on page load
     checkLoginState();
     
+    // Add dashboard access protection
+    const dashboardNav = document.getElementById('dashboard-nav');
+    if (dashboardNav) {
+        dashboardNav.addEventListener('click', function(e) {
+            if (!checkLoginState()) {
+                e.preventDefault();
+                showMessage('Please login to access your dashboard.', 'error');
+                toggleLogin();
+                return false;
+            }
+        });
+    }
+    
+    // Add click handlers to dashboard buttons
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('dashboard-btn')) {
+            if (!checkLoginState()) {
+                e.preventDefault();
+                showMessage('Please login to access this feature.', 'error');
+                toggleLogin();
+                return false;
+            }
+            // Add individual feature handling here
+            showMessage('This feature is coming soon!', 'info');
+        }
+    });
+    
     document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const email = document.querySelector('.newsletter-input').value;
@@ -218,6 +245,11 @@ function handleLogin(event) {
             document.getElementById('login-email').value = '';
             document.getElementById('login-password').value = '';
             document.getElementById('remember-me').checked = false;
+            
+            // Redirect to dashboard after successful login
+            setTimeout(() => {
+                redirectToDashboard();
+            }, 800);
         })
         .catch((error) => {
             let message = 'Invalid Credentials';
@@ -293,7 +325,7 @@ function handleSignup(event) {
             return window.updateProfile(result.user, { displayName: displayName });
         })
         .then(() => {
-            showMessage('Signup Successful', 'success');
+            showMessage('Signup Successful! Welcome to Puthal!', 'success');
             toggleLogin();
             
             // Clear form
@@ -302,10 +334,10 @@ function handleSignup(event) {
             document.getElementById('signup-password').value = '';
             document.getElementById('signup-confirm').value = '';
             
-            // Redirect to homepage/dashboard
+            // Redirect to dashboard after successful signup
             setTimeout(() => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 1000);
+                redirectToDashboard();
+            }, 800);
         })
         .catch((error) => {
             let message = 'Signup failed. Please try again.';
@@ -436,14 +468,34 @@ function hideMessage() {
 
 // Enhanced Authentication UI Management with session persistence
 function updateAuthUI(isLoggedIn, displayName = '', photoURL = '') {
+    console.log('updateAuthUI called with isLoggedIn:', isLoggedIn);
+    
     const authBtn = document.getElementById('auth-btn');
     const logoutBtn = document.getElementById('logout-btn');
     const navbarGreeting = document.getElementById('navbar-greeting');
+    const dashboardNav = document.getElementById('dashboard-nav');
+    const dashboardSection = document.getElementById('dashboard');
+    
+    console.log('Elements found:', {
+        authBtn: !!authBtn,
+        logoutBtn: !!logoutBtn,
+        navbarGreeting: !!navbarGreeting,
+        dashboardNav: !!dashboardNav,
+        dashboardSection: !!dashboardSection
+    });
     
     if (isLoggedIn) {
         if (authBtn) authBtn.style.display = 'none';
         if (logoutBtn) logoutBtn.style.display = 'block';
         if (navbarGreeting) navbarGreeting.style.display = 'block';
+        if (dashboardNav) {
+            dashboardNav.style.display = 'block';
+            console.log('Dashboard nav shown');
+        }
+        if (dashboardSection) {
+            dashboardSection.style.display = 'block';
+            console.log('Dashboard section shown');
+        }
         
         // Update any user display elements if they exist
         const userDisplays = document.querySelectorAll('.user-name-display');
@@ -458,6 +510,14 @@ function updateAuthUI(isLoggedIn, displayName = '', photoURL = '') {
         if (authBtn) authBtn.style.display = 'block';
         if (logoutBtn) logoutBtn.style.display = 'none';
         if (navbarGreeting) navbarGreeting.style.display = 'none';
+        if (dashboardNav) {
+            dashboardNav.style.display = 'none';
+            console.log('Dashboard nav hidden');
+        }
+        if (dashboardSection) {
+            dashboardSection.style.display = 'none';
+            console.log('Dashboard section hidden');
+        }
         
         // Reset user display elements
         const userDisplays = document.querySelectorAll('.user-name-display');
@@ -466,7 +526,129 @@ function updateAuthUI(isLoggedIn, displayName = '', photoURL = '') {
 }
 
 function logout() {
+    enhancedLogout();
+}
+
+// Enhanced login state check with session support
+function checkLoginState() {
+    // Check localStorage first (remember me)
+    let userData = localStorage.getItem('puthal_user');
+    
+    // If not in localStorage, check sessionStorage
+    if (!userData) {
+        userData = sessionStorage.getItem('puthal_user');
+    }
+    
+    if (userData) {
+        try {
+            const user = JSON.parse(userData);
+            updateAuthUI(true, user.displayName, user.photoURL);
+            checkDashboardAccess(); // Update dashboard visibility
+            return true;
+        } catch (error) {
+            console.error('Error parsing user data:', error);
+            // Clear corrupted data
+            localStorage.removeItem('puthal_user');
+            sessionStorage.removeItem('puthal_user');
+        }
+    }
+    
+    checkDashboardAccess(); // Ensure dashboard is hidden if not logged in
+    return false;
+}
+
+// Prevent access to protected content without login
+function requireLogin(callback) {
+    if (!checkLoginState()) {
+        showMessage('Please login to access this feature.', 'error');
+        toggleLogin();
+        return false;
+    }
+    if (callback) callback();
+    return true;
+}
+
+// Dashboard Functions
+function redirectToDashboard() {
+    console.log('redirectToDashboard called');
+    
+    // Show dashboard section
+    const dashboardSection = document.getElementById('dashboard');
+    const dashboardNav = document.getElementById('dashboard-nav');
+    
+    console.log('Dashboard section found:', !!dashboardSection);
+    console.log('Dashboard nav found:', !!dashboardNav);
+    
+    if (dashboardSection) {
+        dashboardSection.style.display = 'block';
+        console.log('Dashboard section display set to block');
+    }
+    
+    if (dashboardNav) {
+        dashboardNav.style.display = 'block';
+        console.log('Dashboard nav display set to block');
+    }
+    
+    // Scroll to dashboard
+    setTimeout(() => {
+        if (dashboardSection) {
+            dashboardSection.scrollIntoView({ behavior: 'smooth' });
+            console.log('Scrolling to dashboard');
+        }
+    }, 500);
+    
+    // Initialize dashboard data
+    initializeDashboard();
+}
+
+function initializeDashboard() {
+    // Set some sample stats for the dashboard
+    const streakElement = document.getElementById('days-streak');
+    const sessionsElement = document.getElementById('sessions-completed');
+    const moodElement = document.getElementById('mood-average');
+    
+    if (streakElement) streakElement.textContent = '7';
+    if (sessionsElement) sessionsElement.textContent = '12';
+    if (moodElement) moodElement.textContent = '8.2';
+}
+
+function checkDashboardAccess() {
+    const dashboardSection = document.getElementById('dashboard');
+    const dashboardNav = document.getElementById('dashboard-nav');
+    
+    if (checkLoginState()) {
+        // User is logged in - show dashboard elements
+        if (dashboardSection) {
+            dashboardSection.style.display = 'block';
+        }
+        if (dashboardNav) {
+            dashboardNav.style.display = 'block';
+        }
+    } else {
+        // User is not logged in - hide dashboard elements
+        if (dashboardSection) {
+            dashboardSection.style.display = 'none';
+        }
+        if (dashboardNav) {
+            dashboardNav.style.display = 'none';
+        }
+    }
+}
+
+// Enhanced logout function
+function enhancedLogout() {
     if (confirm('Are you sure you want to logout?')) {
+        // Hide dashboard
+        const dashboardSection = document.getElementById('dashboard');
+        const dashboardNav = document.getElementById('dashboard-nav');
+        
+        if (dashboardSection) {
+            dashboardSection.style.display = 'none';
+        }
+        if (dashboardNav) {
+            dashboardNav.style.display = 'none';
+        }
+        
         // Clear both localStorage and sessionStorage
         localStorage.removeItem('puthal_user');
         sessionStorage.removeItem('puthal_user');
@@ -486,38 +668,33 @@ function logout() {
     }
 }
 
-// Enhanced login state check with session support
-function checkLoginState() {
-    // Check localStorage first (remember me)
-    let userData = localStorage.getItem('puthal_user');
+// Test function to manually show dashboard (for debugging)
+function testShowDashboard() {
+    console.log('Testing dashboard visibility...');
+    const dashboardSection = document.getElementById('dashboard');
+    const dashboardNav = document.getElementById('dashboard-nav');
     
-    // If not in localStorage, check sessionStorage
-    if (!userData) {
-        userData = sessionStorage.getItem('puthal_user');
+    if (dashboardSection) {
+        dashboardSection.style.display = 'block';
+        console.log('Dashboard section manually shown');
+    } else {
+        console.log('Dashboard section not found!');
     }
     
-    if (userData) {
-        try {
-            const user = JSON.parse(userData);
-            updateAuthUI(true, user.displayName, user.photoURL);
-            return true;
-        } catch (error) {
-            console.error('Error parsing user data:', error);
-            // Clear corrupted data
-            localStorage.removeItem('puthal_user');
-            sessionStorage.removeItem('puthal_user');
+    if (dashboardNav) {
+        dashboardNav.style.display = 'block';
+        console.log('Dashboard nav manually shown');
+    } else {
+        console.log('Dashboard nav not found!');
+    }
+    
+    // Scroll to dashboard
+    setTimeout(() => {
+        if (dashboardSection) {
+            dashboardSection.scrollIntoView({ behavior: 'smooth' });
         }
-    }
-    return false;
+    }, 500);
 }
 
-// Prevent access to protected content without login
-function requireLogin(callback) {
-    if (!checkLoginState()) {
-        showMessage('Please login to access this feature.', 'error');
-        toggleLogin();
-        return false;
-    }
-    if (callback) callback();
-    return true;
-}
+// Make it available globally for testing
+window.testShowDashboard = testShowDashboard;

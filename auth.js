@@ -51,10 +51,20 @@ try {
             
             window.isUserAuthenticated = true;
             window.currentUser = user;
+            
+            // Update dashboard visibility when auth state changes
+            if (typeof checkDashboardAccess === 'function') {
+                checkDashboardAccess();
+            }
         } else {
             localStorage.removeItem('puthal_user');
             window.isUserAuthenticated = false;
             window.currentUser = null;
+            
+            // Hide dashboard when user logs out
+            if (typeof checkDashboardAccess === 'function') {
+                checkDashboardAccess();
+            }
         }
     });
 
