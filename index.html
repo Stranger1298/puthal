@@ -30,6 +30,7 @@
             </button>
         </nav>
         
+                
         <div id="search-overlay" class="search-overlay">
             <div class="search-container">
                 <div class="search-header">
@@ -52,7 +53,6 @@
             </div>
         </div>
         
-        <!-- Login Modal -->
         <div id="login-overlay" class="login-overlay">
             <div class="login-container">
                 <div class="login-header">
@@ -65,7 +65,6 @@
                     <button class="tab-btn" onclick="switchTab('signup')">Sign Up</button>
                 </div>
                 
-                <!-- Login Form -->
                 <div id="login-form" class="auth-form active">
                     <form onsubmit="handleLogin(event)">
                         <div class="input-group">
@@ -107,7 +106,6 @@
                     </div>
                 </div>
                 
-                <!-- Sign Up Form -->
                 <div id="signup-form" class="auth-form">
                     <form onsubmit="handleSignup(event)">
                         <div class="input-group">
@@ -152,7 +150,6 @@
             </div>
         </div>
         
-        <!-- Error/Success Message Display -->
         <div id="message-overlay" class="message-overlay" style="display: none;">
             <div class="message-container">
                 <span id="message-text"></span>
@@ -241,7 +238,6 @@
             </div>
         </section>
 
-        <!-- Dashboard Section - Only visible to logged-in users -->
         <section id="dashboard" class="dashboard" style="display: none;">
             <div class="container">
                 <div class="dashboard-header">

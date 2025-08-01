@@ -1,9 +1,6 @@
-// Newsletter subscription and initialization
 document.addEventListener('DOMContentLoaded', function() {
-    // Check login state on page load
     checkLoginState();
     
-    // Add dashboard access protection
     const dashboardNav = document.getElementById('dashboard-nav');
     if (dashboardNav) {
         dashboardNav.addEventListener('click', function(e) {
@@ -16,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Add click handlers to dashboard buttons
     document.addEventListener('click', function(e) {
         if (e.target.classList.contains('dashboard-btn')) {
             if (!checkLoginState()) {
@@ -25,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 toggleLogin();
                 return false;
             }
-            // Add individual feature handling here
             showMessage('This feature is coming soon!', 'info');
         }
     });

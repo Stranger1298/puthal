@@ -70,7 +70,6 @@ header {
     color: #6366f1;
 }
 
-/* Ensure login button maintains its style in navigation */
 .nav-links .login-btn {
     background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
     color: white !important;
@@ -123,7 +122,6 @@ header {
     box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
 }
 
-/* User Status Display */
 .user-status-display {
     position: fixed;
     top: 20px;
@@ -195,7 +193,6 @@ header {
     transform: scale(1.1);
 }
 
-/* User Status Notifications */
 .user-status-notification {
     position: fixed;
     top: 80px;
@@ -683,7 +680,6 @@ header {
     margin-top: 40px;
 }
 
-/* Dashboard Section Styles */
 .dashboard {
     padding: 80px 20px;
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
@@ -1136,7 +1132,6 @@ html {
     animation: fadeInUp 0.8s ease-out;
 }
 
-/* Login Modal Styles */
 .login-btn {
     background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
     color: white !important;
@@ -1397,7 +1392,6 @@ html {
     text-decoration: underline;
 }
 
-/* Error and Success Messages */
 .auth-error {
     background: #fee2e2;
     color: #dc2626;
@@ -1431,7 +1425,6 @@ html {
     }
 }
 
-/* Auth Suggestion Styles */
 .auth-suggestion {
     background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.05));
     border-radius: 12px;
@@ -1491,7 +1484,6 @@ html {
     }
 }
 
-/* Remember Me Checkbox */
 .remember-me {
     margin-bottom: 20px;
     display: flex;
@@ -1540,7 +1532,6 @@ html {
     border-color: #6366f1;
 }
 
-/* Responsive adjustments for login modal */
 @media (max-width: 480px) {
     .login-container {
         width: 95%;
@@ -1578,7 +1569,6 @@ html {
     }
 }
 
-/* Newsletter Section */
 .newsletter {
     transition: all 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -1614,7 +1604,6 @@ html {
         font-size: 0.7rem;
     }
 
-/* Newsletter Section */
 .newsletter {
     background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
     color: white;
@@ -1728,7 +1717,6 @@ html {
     }
 }
 
-/* Message Overlay System */
 .message-overlay {
     position: fixed;
     top: 0;
@@ -1817,7 +1805,6 @@ html {
     }
 }
 
-/* Logout button styling */
 .logout-btn {
     background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
     color: white !important;
@@ -1870,7 +1857,6 @@ html {
     box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
 }
 
-/* Navbar greeting styling */
 .navbar-greeting {
     color: #6366f1;
     font-weight: 600;
