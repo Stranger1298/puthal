@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Puthal - Mental Health Well-being Reimagined</title>
-    <link rel="icon" type="image/jpeg" href="logo.jpg">
-    <link rel="apple-touch-icon" href="logo.jpg">
-    <link rel="shortcut icon" href="logo.jpg">
+    <title>Puthal - Mental Health Well-being</title>
+    <link rel="icon" href="logo.jpg">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,14 +20,12 @@
                 <li><a href="#features">Features</a></li>
                 <li><a href="#join">Join Us</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="#" class="login-btn" onclick="toggleLogin()">Login</a></li>
+                <li><span id="navbar-greeting" class="navbar-greeting" style="display:none;">Hello, <span class="user-name-display">User</span>! 👋</span></li>
+                <li><a href="#" class="login-btn" onclick="toggleLogin()" id="auth-btn">Login</a></li>
+                <li><a href="#" class="logout-btn" onclick="logout()" id="logout-btn" style="display:none;">Logout</a></li>
             </ul>
             <button class="search-icon" onclick="toggleSearch()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.35-4.35"></path>
-                    <circle cx="11" cy="11" r="3" fill="currentColor" opacity="0.2"></circle>
-                </svg>
+                🔍
             </button>
         </nav>
         
@@ -73,22 +69,11 @@
                     <form onsubmit="handleLogin(event)">
                         <div class="input-group">
                             <input type="email" id="login-email" placeholder="Email" required>
-                            <span class="input-icon">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                    <polyline points="22,6 12,13 2,6"></polyline>
-                                </svg>
-                            </span>
+                            <span class="input-icon">📧</span>
                         </div>
                         <div class="input-group">
                             <input type="password" id="login-password" placeholder="Password" required>
-                            <span class="input-icon">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                    <path d="M8 7v4m8-4v4"></path>
-                                </svg>
-                            </span>
+                            <span class="input-icon">🔒</span>
                         </div>
                         <div class="remember-me">
                             <label class="checkbox-label">
@@ -126,41 +111,19 @@
                     <form onsubmit="handleSignup(event)">
                         <div class="input-group">
                             <input type="text" id="signup-name" placeholder="Full Name" required>
-                            <span class="input-icon">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </span>
+                            <span class="input-icon">👤</span>
                         </div>
                         <div class="input-group">
                             <input type="email" id="signup-email" placeholder="Email" required>
-                            <span class="input-icon">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                    <polyline points="22,6 12,13 2,6"></polyline>
-                                </svg>
-                            </span>
+                            <span class="input-icon">📧</span>
                         </div>
                         <div class="input-group">
                             <input type="password" id="signup-password" placeholder="Password" required minlength="6">
-                            <span class="input-icon">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                    <path d="M8 7v4m8-4v4"></path>
-                                </svg>
-                            </span>
+                            <span class="input-icon">🔒</span>
                         </div>
                         <div class="input-group">
                             <input type="password" id="signup-confirm" placeholder="Confirm Password" required>
-                            <span class="input-icon">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                    <path d="M8 7v4m8-4v4"></path>
-                                </svg>
-                            </span>
+                            <span class="input-icon">🔒</span>
                         </div>
                         <button type="submit" class="auth-btn">Create Account</button>
                     </form>
@@ -187,8 +150,17 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Error/Success Message Display -->
+        <div id="message-overlay" class="message-overlay" style="display: none;">
+            <div class="message-container">
+                <span id="message-text"></span>
+                <button onclick="hideMessage()" class="message-close">&times;</button>
+            </div>
+        </div>
     </header>
-    <main>
+
+    <main id="main-content">
         <section id="home" class="hero">
             <div class="hero-content">
                 <h1>Mental Health<br>Well-being<br>Reimagined</h1>
@@ -198,18 +170,10 @@
                     <h3>Download Our App:</h3>
                     <div class="app-buttons">
                         <a href="#" class="app-btn">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-                                <line x1="12" y1="18" x2="12.01" y2="18"></line>
-                            </svg>
-                            Download on the App Store
+                            📱 Download on the App Store
                         </a>
                         <a href="#" class="app-btn google-play">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="5,3 19,12 5,21"></polygon>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg>
-                            Get it on Google Play
+                            📲 Get it on Google Play
                         </a>
                     </div>
                 </div>
@@ -220,15 +184,7 @@
                     <div class="phone-screen">
                         <div class="status-bar">
                             <span>1:30</span>
-                            <span class="status-icons">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M2 17h20v2H2zm1.15-4.05L4 11l5.55-3.96L12 8l2.45-.96L20 11l.85 1.95L12 16l-8.85-2.05z"/>
-                                </svg>
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/>
-                                </svg>
-                                100%
-                            </span>
+                            <span class="status-icons">100%</span>
                         </div>
                         
                         <div class="app-header">
@@ -261,57 +217,21 @@
                         </div>
                         
                         <div class="meditation-card">
-                            <span class="meditation-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="7" r="3"></circle>
-                                    <path d="M9 16v-4c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2v4"></path>
-                                    <path d="M8 18c-1.1 0-2-.9-2-2v-2c0-1.1.9-2 2-2s2 .9 2 2v2c0 1.1-.9 2-2 2z"></path>
-                                    <path d="M16 18c1.1 0 2-.9 2-2v-2c0-1.1-.9-2-2-2s-2 .9-2 2v2c0 1.1.9 2 2 2z"></path>
-                                    <circle cx="12" cy="20" r="1" fill="currentColor"></circle>
-                                </svg>
-                            </span>
                             <p>Start your mindfulness journey</p>
                             <small>Tap to begin meditation</small>
                         </div>
                         
                         <div class="bottom-nav">
                             <div class="nav-item">
-                                <span class="icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                        <polyline points="9,22 9,12 15,12 15,22"></polyline>
-                                    </svg>
-                                </span>
                                 <span>Home</span>
                             </div>
                             <div class="nav-item">
-                                <span class="icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="18" y1="20" x2="18" y2="10"></line>
-                                        <line x1="12" y1="20" x2="12" y2="4"></line>
-                                        <line x1="6" y1="20" x2="6" y2="14"></line>
-                                    </svg>
-                                </span>
                                 <span>Track</span>
                             </div>
                             <div class="nav-item">
-                                <span class="icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="12" cy="7" r="3"></circle>
-                                        <path d="M9 16v-4c0-1.1.9-2 2-2h2c1.1 0 2 .9 2 2v4"></path>
-                                        <path d="M8 18c-1.1 0-2-.9-2-2v-2c0-1.1.9-2 2-2s2 .9 2 2v2c0 1.1-.9 2-2 2z"></path>
-                                        <path d="M16 18c1.1 0 2-.9 2-2v-2c0-1.1-.9-2-2-2s-2 .9-2 2v2c0 1.1.9 2 2 2z"></path>
-                                    </svg>
-                                </span>
                                 <span>Meditate</span>
                             </div>
                             <div class="nav-item">
-                                <span class="icon">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="12" cy="7" r="4"></circle>
-                                    </svg>
-                                </span>
                                 <span>Profile</span>
                             </div>
                         </div>
@@ -324,50 +244,26 @@
             <div class="features-container">
                 <div class="features-grid">
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5a2.5 2.5 0 0 1 2.5-2.5C16.34 2 18 3.66 18 5.5c0 2.33-3.5 6.5-6 11.5-2.5-5-6-9.17-6-11.5C6 3.66 7.66 2 9.5 2z"></path>
-                                <circle cx="12" cy="8" r="2"></circle>
-                                <path d="M8 14c0-2 2-2 4-2s4 0 4 2"></path>
-                                <path d="M10 18c0-1 1-1 2-1s2 0 2 1"></path>
-                            </svg>
-                        </div>
-                        <h3>AI Mood<br>Tracking</h3>
+                        <div class="feature-icon">❤️</div>
+                        <h3>AI Mood Tracking</h3>
                         <p>AI-driven mood monitoring</p>
                     </div>
 
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                                <circle cx="12" cy="10" r="3" fill="none"></circle>
-                            </svg>
-                        </div>
-                        <h3>Mindfulness<br>Exercises</h3>
-                        <p>Exercises for<br>inner peace</p>
+                        <div class="feature-icon">⭐</div>
+                        <h3>Mindfulness Exercises</h3>
+                        <p>Exercises for inner peace</p>
                     </div>
 
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                                <circle cx="12" cy="12" r="3" fill="none"></circle>
-                            </svg>
-                        </div>
-                        <h3>Therapy &<br>Counseling</h3>
-                        <p>Professional support<br>& resources</p>
+                        <div class="feature-icon">💬</div>
+                        <h3>Therapy & Counseling</h3>
+                        <p>Professional support & resources</p>
                     </div>
 
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="9" cy="7" r="4"></circle>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                            </svg>
-                        </div>
-                        <h3>Community<br>Support</h3>
+                        <div class="feature-icon">👥</div>
+                        <h3>Community Support</h3>
                         <p>Connect with others</p>
                     </div>
                 </div>
@@ -376,7 +272,7 @@
 
         <section id="newsletter" class="newsletter">
             <div class="newsletter-container">
-                <h2>📧 Stay Connected</h2>
+                <h2>Stay Connected</h2>
                 <p>Get the latest updates on mental health resources and app features</p>
                 
                 <form class="newsletter-form">
@@ -420,21 +316,11 @@
                     <ul>
                         <li>
                             <a href="https://www.linkedin.com/company/theputhal/">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                    <rect x="2" y="9" width="4" height="12"></rect>
-                                    <circle cx="4" cy="4" r="2"></circle>
-                                </svg>
                                 LinkedIn
                             </a>
                         </li>
                         <li>
                             <a href="https://www.instagram.com/theputhal/">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                    <path d="m16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                                </svg>
                                 Instagram
                             </a>
                         </li>
@@ -443,15 +329,11 @@
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2025 Puthal. All rights reserved. Made with ❤️ for mental wellness.</p>
+                <p>&copy; 2025 Puthal. All rights reserved. Made with care for mental wellness.</p>
             </div>
         </div>
     </footer>
 
-
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    
     <script type="module" src="auth.js"></script>
     <script src="script.js"></script>
 </body>
