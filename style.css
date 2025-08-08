@@ -1806,9 +1806,9 @@ html {
 }
 
 .logout-btn {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    background: linear-gradient(135deg, #6944ef 0%, #dc2626 100%);
     color: white !important;
-    padding: 12px 24px;
+    padding: 14px 24px;
     border-radius: 25px;
     text-decoration: none !important;
     transition: all 0.3s ease;

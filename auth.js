@@ -27,7 +27,6 @@ try {
       prompt: 'select_account'
     });
 
-    // Make Firebase auth available globally
     window.firebaseAuth = {
         auth,
         signInWithEmailAndPassword,
@@ -51,8 +50,7 @@ try {
             
             window.isUserAuthenticated = true;
             window.currentUser = user;
-            
-            // Update dashboard visibility when auth state changes
+
             if (typeof checkDashboardAccess === 'function') {
                 checkDashboardAccess();
             }
@@ -60,18 +58,16 @@ try {
             localStorage.removeItem('puthal_user');
             window.isUserAuthenticated = false;
             window.currentUser = null;
-            
-            // Hide dashboard when user logs out
+
             if (typeof checkDashboardAccess === 'function') {
                 checkDashboardAccess();
             }
         }
     });
 
-    // Signal that Firebase is ready
     window.firebaseReady = true;
     
 } catch (error) {
     console.error('Firebase initialization error:', error);
-    alert('Authentication service failed to initialize. Please refresh the page.');
+    alert('Authentication service failed. Please refresh the page.');
 }
