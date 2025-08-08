@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     checkLoginState();
+    checkAuthAndRedirect(); // Add route protection check
     
     const dashboardNav = document.getElementById('dashboard-nav');
     if (dashboardNav) {
@@ -183,7 +184,7 @@ function handleLogin(event) {
             
             updateAuthUI(true, displayName, user.photoURL || 'https://via.placeholder.com/40');
             
-            showMessage(`Welcome back, ${displayName}!`, 'success');
+            showWelcomeMessage(displayName);
             toggleLogin();
             
             document.getElementById('login-email').value = '';
@@ -261,7 +262,7 @@ function handleSignup(event) {
             return window.updateProfile(result.user, { displayName: displayName });
         })
         .then(() => {
-            showMessage('Signup Successful! Welcome to Puthal!', 'success');
+            showMessage('Account created successfully! Welcome to Puthal!', 'success');
             toggleLogin();
             
             document.getElementById('signup-name').value = '';
@@ -308,7 +309,7 @@ function loginWithGoogle() {
             
             updateAuthUI(true, displayName, user.photoURL || 'https://via.placeholder.com/40');
             
-            showMessage(`Welcome, ${displayName}! You're now signed in.`, 'success');
+            showWelcomeMessage(displayName);
             
             toggleLogin();
         })
@@ -374,10 +375,19 @@ function showMessage(message, type = 'info') {
     overlay.className = `message-overlay ${type}`;
     overlay.style.display = 'flex';
     
+    // Auto-hide messages based on type
     if (type === 'success') {
         setTimeout(() => {
             hideMessage();
         }, 3000);
+    } else if (type === 'welcome') {
+        setTimeout(() => {
+            hideMessage();
+        }, 5000); // Show welcome messages longer
+    } else if (type === 'info') {
+        setTimeout(() => {
+            hideMessage();
+        }, 4000);
     }
 }
 
@@ -474,6 +484,9 @@ function redirectToDashboard() {
         dashboardNav.style.display = 'block';
     }
     
+    // Update dashboard welcome message
+    updateDashboardWelcome();
+    
     setTimeout(() => {
         if (dashboardSection) {
             dashboardSection.scrollIntoView({ behavior: 'smooth' });
@@ -481,6 +494,36 @@ function redirectToDashboard() {
     }, 500);
     
     initializeDashboard();
+}
+
+function updateDashboardWelcome() {
+    let userData = localStorage.getItem('puthal_user');
+    if (!userData) {
+        userData = sessionStorage.getItem('puthal_user');
+    }
+    
+    if (userData) {
+        try {
+            const user = JSON.parse(userData);
+            const dashboardWelcome = document.getElementById('dashboard-welcome');
+            if (dashboardWelcome) {
+                const currentHour = new Date().getHours();
+                let timeGreeting = '';
+                
+                if (currentHour < 12) {
+                    timeGreeting = 'Good morning';
+                } else if (currentHour < 17) {
+                    timeGreeting = 'Good afternoon';
+                } else {
+                    timeGreeting = 'Good evening';
+                }
+                
+                dashboardWelcome.textContent = `${timeGreeting}, ${user.displayName}!`;
+            }
+        } catch (error) {
+            console.error('Error updating dashboard welcome:', error);
+        }
+    }
 }
 
 function initializeDashboard() {
@@ -496,6 +539,7 @@ function initializeDashboard() {
 function checkDashboardAccess() {
     const dashboardSection = document.getElementById('dashboard');
     const dashboardNav = document.getElementById('dashboard-nav');
+    const currentHash = window.location.hash;
     
     let userData = localStorage.getItem('puthal_user');
     if (!userData) {
@@ -512,6 +556,15 @@ function checkDashboardAccess() {
             dashboardNav.style.display = 'block';
         }
     } else {
+        // If user is not logged in and trying to access dashboard
+        if (currentHash === '#dashboard') {
+            window.location.hash = '#home';
+            showMessage('Please login to access your dashboard.', 'error');
+            setTimeout(() => {
+                toggleLogin();
+            }, 1000);
+        }
+        
         if (dashboardSection) {
             dashboardSection.style.display = 'none';
         }
@@ -543,5 +596,206 @@ function enhancedLogout() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         
         showMessage('You have been logged out successfully.', 'success');
+    }
+}
+
+// Forgot Password Functions
+function showForgotPassword() {
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+    const forgotForm = document.getElementById('forgot-password-form');
+    const tabs = document.querySelectorAll('.tab-btn');
+    
+    // Hide login and signup forms
+    loginForm.classList.remove('active');
+    signupForm.classList.remove('active');
+    forgotForm.classList.add('active');
+    
+    // Hide tabs
+    tabs.forEach(tab => tab.style.display = 'none');
+    
+    // Update header
+    const loginHeader = document.querySelector('.login-header h2');
+    loginHeader.textContent = 'Reset Password';
+}
+
+function backToLogin() {
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+    const forgotForm = document.getElementById('forgot-password-form');
+    const tabs = document.querySelectorAll('.tab-btn');
+    
+    // Show login form
+    loginForm.classList.add('active');
+    signupForm.classList.remove('active');
+    forgotForm.classList.remove('active');
+    
+    // Show tabs
+    tabs.forEach(tab => tab.style.display = 'block');
+    
+    // Reset tab states
+    tabs.forEach(t => t.classList.remove('active'));
+    document.querySelector('[onclick="switchTab(\'login\')"]').classList.add('active');
+    
+    // Reset header
+    const loginHeader = document.querySelector('.login-header h2');
+    loginHeader.textContent = 'Welcome to Puthal';
+    
+    // Clear forgot password form
+    document.getElementById('forgot-email').value = '';
+}
+
+function handleForgotPassword(event) {
+    event.preventDefault();
+    
+    const email = document.getElementById('forgot-email').value.trim();
+    
+    if (!email) {
+        showMessage('Please enter your email address.', 'error');
+        return;
+    }
+    
+    if (!isValidEmail(email)) {
+        showMessage('Please enter a valid email address.', 'error');
+        return;
+    }
+    
+    waitForFirebase()
+        .then(() => {
+            return window.firebaseAuth.sendPasswordResetEmail(window.firebaseAuth.auth, email);
+        })
+        .then(() => {
+            showMessage('Password reset link sent! Please check your email.', 'success');
+            document.getElementById('forgot-email').value = '';
+            
+            // Automatically go back to login after successful send
+            setTimeout(() => {
+                backToLogin();
+            }, 2000);
+        })
+        .catch((error) => {
+            let message = 'Failed to send reset email. Please try again.';
+            
+            if (error.code === 'auth/user-not-found') {
+                message = 'No account found with this email address.';
+            } else if (error.code === 'auth/invalid-email') {
+                message = 'Please enter a valid email address.';
+            } else if (error.code === 'auth/too-many-requests') {
+                message = 'Too many requests. Please try again later.';
+            }
+            
+            showMessage(message, 'error');
+        });
+}
+
+// Enhanced Welcome Message Function
+function showWelcomeMessage(displayName) {
+    const currentHour = new Date().getHours();
+    let greeting;
+    
+    if (currentHour < 12) {
+        greeting = 'Good morning';
+    } else if (currentHour < 17) {
+        greeting = 'Good afternoon';
+    } else {
+        greeting = 'Good evening';
+    }
+    
+    const motivationalQuotes = [
+        'Today is a new day to care for your mind.',
+        'Your mental wellness journey continues.',
+        'Take a moment to breathe and reflect.',
+        'Every step forward is progress.',
+        'You are stronger than you think.',
+        'Self-care is not selfish, it\'s essential.',
+        'Your mental health matters.'
+    ];
+    
+    const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+    
+    const welcomeMessage = `${greeting}, ${displayName}! 🌟 ${randomQuote}`;
+    
+    // Show welcome message with enhanced styling
+    setTimeout(() => {
+        showMessage(welcomeMessage, 'welcome');
+    }, 1000);
+}
+
+// Enhanced Auth State Check with Route Protection
+function checkAuthAndRedirect() {
+    const currentPath = window.location.hash || '#home';
+    const protectedRoutes = ['#dashboard'];
+    
+    if (protectedRoutes.includes(currentPath)) {
+        if (!checkLoginState()) {
+            showMessage('Please login to access this page.', 'error');
+            window.location.hash = '#home';
+            toggleLogin();
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+// Monitor hash changes for route protection
+window.addEventListener('hashchange', () => {
+    checkAuthAndRedirect();
+});
+
+// Enhanced Login State Check with Session Persistence
+function checkLoginState() {
+    let userData = localStorage.getItem('puthal_user');
+    
+    if (!userData) {
+        userData = sessionStorage.getItem('puthal_user');
+    }
+    
+    if (userData) {
+        try {
+            const user = JSON.parse(userData);
+            updateAuthUI(true, user.displayName, user.photoURL);
+            checkDashboardAccess();
+            
+            // Show personalized greeting in navbar
+            updateNavbarGreeting(user.displayName);
+            
+            // Update dashboard welcome if on dashboard
+            if (window.location.hash === '#dashboard') {
+                updateDashboardWelcome();
+            }
+            
+            return true;
+        } catch (error) {
+            console.error('Error parsing user data:', error);
+            localStorage.removeItem('puthal_user');
+            sessionStorage.removeItem('puthal_user');
+        }
+    }
+    
+    checkDashboardAccess();
+    return false;
+}
+
+// Update navbar greeting with time-based message
+function updateNavbarGreeting(displayName) {
+    const navbarGreeting = document.getElementById('navbar-greeting');
+    const userNameDisplay = document.querySelector('.user-name-display');
+    
+    if (navbarGreeting && userNameDisplay) {
+        const currentHour = new Date().getHours();
+        let timeGreeting = '';
+        
+        if (currentHour < 12) {
+            timeGreeting = 'Good morning';
+        } else if (currentHour < 17) {
+            timeGreeting = 'Good afternoon';
+        } else {
+            timeGreeting = 'Good evening';
+        }
+        
+        userNameDisplay.textContent = displayName;
+        navbarGreeting.innerHTML = `${timeGreeting}, <span class="user-name-display">${displayName}</span>! 👋`;
+        navbarGreeting.style.display = 'block';
     }
 }

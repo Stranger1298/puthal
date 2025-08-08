@@ -6,7 +6,9 @@ import {
     signInWithPopup, 
     GoogleAuthProvider, 
     signOut, 
-    updateProfile 
+    updateProfile,
+    sendPasswordResetEmail,
+    onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 const firebaseConfig = {
@@ -34,22 +36,30 @@ try {
         signInWithPopup,
         googleProvider,
         signOut,
-        updateProfile
+        updateProfile,
+        sendPasswordResetEmail
     };
 
     window.updateProfile = updateProfile;
 
     auth.onAuthStateChanged((user) => {
         if (user) {
+            const displayName = user.displayName || user.email.split('@')[0];
+            
             localStorage.setItem('puthal_user', JSON.stringify({
                 uid: user.uid,
                 email: user.email,
-                displayName: user.displayName || user.email.split('@')[0],
+                displayName: displayName,
                 photoURL: user.photoURL
             }));
             
             window.isUserAuthenticated = true;
             window.currentUser = user;
+
+            // Show personalized welcome message
+            if (typeof showWelcomeMessage === 'function') {
+                showWelcomeMessage(displayName);
+            }
 
             if (typeof checkDashboardAccess === 'function') {
                 checkDashboardAccess();

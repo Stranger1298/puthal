@@ -1392,6 +1392,52 @@ html {
     text-decoration: underline;
 }
 
+.forgot-password-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.forgot-password-header h3 {
+    color: #374151;
+    margin-bottom: 8px;
+    font-size: 1.5rem;
+}
+
+.forgot-password-header p {
+    color: #6b7280;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.back-to-login {
+    color: #6366f1;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+}
+
+.back-to-login:hover {
+    color: #5855eb;
+    transform: translateX(-2px);
+}
+
+.navbar-greeting {
+    color: #6366f1;
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 20px;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.navbar-greeting .user-name-display {
+    font-weight: 600;
+}
+
 .auth-error {
     background: #fee2e2;
     color: #dc2626;
@@ -1759,6 +1805,20 @@ html {
 .message-overlay.info .message-container {
     border-left: 5px solid #3b82f6;
     background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+}
+
+.message-overlay.welcome .message-container {
+    border-left: 5px solid #f59e0b;
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border-radius: 20px;
+    box-shadow: 0 15px 50px rgba(245, 158, 11, 0.2);
+}
+
+.message-overlay.welcome #message-text {
+    font-size: 17px;
+    font-weight: 600;
+    color: #92400e;
+    line-height: 1.5;
 }
 
 #message-text {
