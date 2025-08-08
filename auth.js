@@ -56,7 +56,6 @@ try {
             window.isUserAuthenticated = true;
             window.currentUser = user;
 
-            // Show personalized welcome message
             if (typeof showWelcomeMessage === 'function') {
                 showWelcomeMessage(displayName);
             }

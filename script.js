@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     checkLoginState();
-    checkAuthAndRedirect(); // Add route protection check
+    checkAuthAndRedirect();
     
     const dashboardNav = document.getElementById('dashboard-nav');
     if (dashboardNav) {
@@ -375,7 +375,6 @@ function showMessage(message, type = 'info') {
     overlay.className = `message-overlay ${type}`;
     overlay.style.display = 'flex';
     
-    // Auto-hide messages based on type
     if (type === 'success') {
         setTimeout(() => {
             hideMessage();
@@ -383,7 +382,7 @@ function showMessage(message, type = 'info') {
     } else if (type === 'welcome') {
         setTimeout(() => {
             hideMessage();
-        }, 5000); // Show welcome messages longer
+        }, 5000);
     } else if (type === 'info') {
         setTimeout(() => {
             hideMessage();
@@ -484,7 +483,6 @@ function redirectToDashboard() {
         dashboardNav.style.display = 'block';
     }
     
-    // Update dashboard welcome message
     updateDashboardWelcome();
     
     setTimeout(() => {
@@ -556,7 +554,6 @@ function checkDashboardAccess() {
             dashboardNav.style.display = 'block';
         }
     } else {
-        // If user is not logged in and trying to access dashboard
         if (currentHash === '#dashboard') {
             window.location.hash = '#home';
             showMessage('Please login to access your dashboard.', 'error');
@@ -599,22 +596,18 @@ function enhancedLogout() {
     }
 }
 
-// Forgot Password Functions
 function showForgotPassword() {
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
     const forgotForm = document.getElementById('forgot-password-form');
     const tabs = document.querySelectorAll('.tab-btn');
     
-    // Hide login and signup forms
     loginForm.classList.remove('active');
     signupForm.classList.remove('active');
     forgotForm.classList.add('active');
     
-    // Hide tabs
     tabs.forEach(tab => tab.style.display = 'none');
     
-    // Update header
     const loginHeader = document.querySelector('.login-header h2');
     loginHeader.textContent = 'Reset Password';
 }
@@ -625,23 +618,18 @@ function backToLogin() {
     const forgotForm = document.getElementById('forgot-password-form');
     const tabs = document.querySelectorAll('.tab-btn');
     
-    // Show login form
     loginForm.classList.add('active');
     signupForm.classList.remove('active');
     forgotForm.classList.remove('active');
     
-    // Show tabs
     tabs.forEach(tab => tab.style.display = 'block');
     
-    // Reset tab states
     tabs.forEach(t => t.classList.remove('active'));
     document.querySelector('[onclick="switchTab(\'login\')"]').classList.add('active');
     
-    // Reset header
     const loginHeader = document.querySelector('.login-header h2');
     loginHeader.textContent = 'Welcome to Puthal';
     
-    // Clear forgot password form
     document.getElementById('forgot-email').value = '';
 }
 
@@ -668,7 +656,6 @@ function handleForgotPassword(event) {
             showMessage('Password reset link sent! Please check your email.', 'success');
             document.getElementById('forgot-email').value = '';
             
-            // Automatically go back to login after successful send
             setTimeout(() => {
                 backToLogin();
             }, 2000);
@@ -688,7 +675,6 @@ function handleForgotPassword(event) {
         });
 }
 
-// Enhanced Welcome Message Function
 function showWelcomeMessage(displayName) {
     const currentHour = new Date().getHours();
     let greeting;
@@ -715,13 +701,11 @@ function showWelcomeMessage(displayName) {
     
     const welcomeMessage = `${greeting}, ${displayName}! 🌟 ${randomQuote}`;
     
-    // Show welcome message with enhanced styling
     setTimeout(() => {
         showMessage(welcomeMessage, 'welcome');
     }, 1000);
 }
 
-// Enhanced Auth State Check with Route Protection
 function checkAuthAndRedirect() {
     const currentPath = window.location.hash || '#home';
     const protectedRoutes = ['#dashboard'];
@@ -738,12 +722,10 @@ function checkAuthAndRedirect() {
     return true;
 }
 
-// Monitor hash changes for route protection
 window.addEventListener('hashchange', () => {
     checkAuthAndRedirect();
 });
 
-// Enhanced Login State Check with Session Persistence
 function checkLoginState() {
     let userData = localStorage.getItem('puthal_user');
     
@@ -757,10 +739,8 @@ function checkLoginState() {
             updateAuthUI(true, user.displayName, user.photoURL);
             checkDashboardAccess();
             
-            // Show personalized greeting in navbar
             updateNavbarGreeting(user.displayName);
             
-            // Update dashboard welcome if on dashboard
             if (window.location.hash === '#dashboard') {
                 updateDashboardWelcome();
             }
@@ -777,7 +757,6 @@ function checkLoginState() {
     return false;
 }
 
-// Update navbar greeting with time-based message
 function updateNavbarGreeting(displayName) {
     const navbarGreeting = document.getElementById('navbar-greeting');
     const userNameDisplay = document.querySelector('.user-name-display');
